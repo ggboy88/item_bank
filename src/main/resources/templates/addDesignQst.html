@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加简答题</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+    <form method="post" action="/test/addDesignQst" class="layui-form">
+        <div>
+            <div><b th:text="${successMsg}" style="color: green"></b></div>
+            <div><b th:text="${wrongMsg1}" style="color: #ff0000"></b></div>
+            <div><b th:text="${wrongMsg2}" style="color: red"></b></div>
+            <b>试题信息</b><br>
+            <div class="layui-form-item">
+                <label class="layui-form-label">请选择科目</label>
+                <div class="layui-input-block">
+                    <select name="questionCourse">
+                        <option value=""></option>
+                        <option th:each="s:${subjects}" th:value="${s.getCourseId()}" th:text="${s.getCourseName()}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">请选择试题难度</label>
+                <div class="layui-input-block">
+                    <select name="questionLevel">
+                        <option value=""></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <b>试题内容</b><br>
+            问题描述：<textarea cols="30" rows="5" name="designInfo" class="layui-textarea"></textarea><br><br>
+            答案：<textarea cols="30" rows="5" name="designAnsw" class="layui-textarea"></textarea>
+        </div>
+        <input type="submit" value="上传试题" class="layui-btn layui-btn-xs">
+    </form>
+    <script>
+        layui.use('form',function () {
+            var form = layui.form;
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学院列表</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+</head>
+<body>
+    <b>学院列表</b>
+    <table border="1px" class="layui-table">
+        <thead>
+            <tr>
+                <td>学院编号</td>
+                <td>学院姓名</td>
+                <td>查看学院信息</td>
+                <td>删除学院</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="specialty:${specialties}">
+                <td th:text="${specialty.getSpecialtyId()}"></td>
+                <td th:text="${specialty.getSpecialtyName()}"></td>
+                <td><a class="layui-tab" th:href="@{/toSpecialtyDetail(specialtyId = ${specialty.getSpecialtyId()})}">查看</a></td>
+                <td><a class="layui-tab" th:onclick="|javascript:deleteS(${specialty.getSpecialtyId()})|">删除</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <b>添加学院</b><br>
+    <input type="text" placeholder="请输入学院名" id="specialtyName" class="layui-input">
+    <input type="button" value="添加" class="layui-btn layui-btn-xs">
+    <script src="../static/js/jquery.min.js"></script>
+    <script>
+        function deleteS(specialtyId) {
+            $.post("/deleteSpecialty",{"specialtyId":specialtyId},function (res) {
+                window.location.reload(res);
+            })
+        }
+
+        $(function () {
+            $("input:button").click(function () {
+                var specialtyName = $("#specialtyName").val();
+                $.post("/updateSp",{"specialtyName":specialtyName},function (res) {
+
+                    window.location.reload(res);
+
+                })
+            })
+        })
+
+    </script>
+</body>
+</html>

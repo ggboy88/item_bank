@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>判断题列表</title>
+    <script src="../static/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+</head>
+<body>
+<table border="1px" class="layui-table">
+    <tr>
+        <th>编号</th>
+        <th>试题内容</th>
+        <th>答案</th>
+        <th>操作</th>
+    </tr>
+    <tbody id="choiceData">
+    </tbody>
+</table><br>
+<script>
+    $.post("/test/TOFList",{"page":1,"limit":10},function (res) {
+        console.log(res);
+        var TOFList = res.TOFList;
+        for (var i=0;i<TOFList.length;i++){
+            var TOFQst = TOFList[i];
+            var trTag = document.createElement("tr");
+            var td1 = document.createElement("td");
+            td1.innerHTML = TOFQst.tofquestion;
+            var td2 = document.createElement("td");
+            var text1 = document.createElement("textarea");
+            text1.innerHTML = TOFQst.tofinfo;
+            text1.name = TOFQst.tofquestion;
+            td2.appendChild(text1);
+            var td3 = document.createElement("td");
+            var text2 = document.createElement("textarea");
+            text2.innerHTML = TOFQst.tofansw;
+            text2.name = TOFQst.tofquestion;
+            td3.appendChild(text2);
+            var td4 = document.createElement("td");
+            var btn1 = document.createElement("button");
+            btn1.innerText = "修改";
+            btn1.onclick = function(){
+                window.location.reload(true);
+            }
+            var btn2 = document.createElement("button");
+            btn2.innerText = "删除";
+            btn2.id = TOFQst.tofquestion;
+            btn2.onclick = function (){
+                var tofquestion = this.id;
+                $.post("/test/deleteTOFTest",{"tofquestion":tofquestion},function (res) {
+                    window.location.reload(true);
+                })
+            }
+            td4.appendChild(btn1);
+            td4.appendChild(btn2);
+
+
+            trTag.appendChild(td1);
+            trTag.appendChild(td2);
+            trTag.appendChild(td3);
+            trTag.appendChild(td4);
+
+            document.getElementById("choiceData").appendChild(trTag);
+        }
+    },"json")
+</script>
+
+</body>
+</html>

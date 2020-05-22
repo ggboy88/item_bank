@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>手动组卷</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+</head>
+<body>
+    <b>科目列表</b><br>
+    <select id="subject" onchange="selectSubject()">
+        <option>请选择科目</option>
+        <option th:each="subject:${subjectList}" th:text="${subject.getCourseName()}" th:value="${subject.getCourseId()}"></option>
+    </select>
+    <script>
+        function selectSubject() {
+            const sub = $('select option:selected').val();
+            location.href = "/paper/manuallyPaper?subject="+sub;
+        }
+    </script>
+
+</body>
+</html>

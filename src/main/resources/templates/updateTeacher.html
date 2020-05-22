@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改教师信息</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+        <div><b style="color: red" id="msg"></b> </div>
+        编号：<input type="text" disabled="disabled" class="layui-input" th:value="${updateUser.getId()}" id="id"><br>
+        手机号：<input type="text" class="layui-input" th:value="${updateUser.getUsername()}" id="username"><br>
+        密码：<input type="text" class="layui-input" th:value="${updateUser.getPassword()}" id="password"><br>
+        教师姓名：<input type="text" class="layui-input" th:value="${updateUser.getTeacherName()}" id="teacherName"><br>
+        <input type="button" value="提交" class="layui-btn layui-btn-xs">
+
+    <script>
+        $(function () {
+            $("input:button").click(function () {
+                var id = $("#id").val();
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var teacherName = $("#teacherName").val();
+                $.post("/admin/updateUser",{"id":id,"username":username,"password":password,"TeacherName":teacherName},function (res) {
+                    if(res){
+                        $("#msg").text("修改成功！");
+                    }else {
+                        $("#msg").text("修改失败！");
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>

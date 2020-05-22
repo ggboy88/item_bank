@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册请求</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+</head>
+<body>
+    <table border="1px" class="layui-table">
+        <thead>
+            <tr>
+                <td>手机号</td>
+                <td>密码</td>
+                <td>教师姓名</td>
+                <td>教师学院</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user:${users}">
+                <td th:text="${user.getUsername()}"></td>
+                <td th:text="${user.getPassword()}"></td>
+                <td th:text="${user.getTeacherName()}"></td>
+                <td th:text="${user.getTeacherSpecialty()}"></td>
+                <td><input type="button" class="layui-btn layui-btn-xs" value="确认" th:onclick="accessReq([[${user.getId()}]])">
+                    <input type="button" class="layui-btn layui-btn-danger layui-btn-xs" value="取消" th:onclick="refuseReq([[${user.getId()}]])"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function accessReq(userId) {
+            $.post("/admin/accessReq",{"userId":userId},function (res) {
+                if (res){
+                    location.reload();
+                }else {
+                    alert("操作失败，请稍后重试！");
+                }
+            })
+        }
+        function refuseReq(userId) {
+            $.post("/admin/refuseReq",{"userId":userId},function (res) {
+                if (res){
+                    location.reload();
+                }else {
+                    alert("操作失败，请稍后重试！");
+                }
+            })
+        }
+    </script>
+</body>
+</html>

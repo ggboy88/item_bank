@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <p id="msg"></p><br>
+        <b>试题类型</b>
+        <select onchange="func(this)">
+            <option>请选择题型</option>
+            <option>选择题</option>
+            <option>判断题</option>
+            <option>简答题</option>
+            <option>应用题</option>
+        </select>
+    </div>
+    <input type="button" class="layui-btn layui-btn-xs" value="生成试卷" onclick="updatePaper()">
+    <input type="button" class="layui-btn layui-btn-normal layui-btn-xs" value="查看试卷" onclick="listPaper()">
+    <script>
+        function func(obj) {
+            var type = obj.value;
+            location.href = "/paper/listAndChoiceTest?type="+type;
+        }
+        function updatePaper() {
+            $.post("/paper/updatePaper",{"msg":"msg"},function(res){
+                if (res){
+                    $("#msg").text("试卷添加成功").css("color","green");
+                }else {
+                    $("#msg").text("试卷添加失败，请稍后重试").css("color","red");
+                }
+            })
+        }
+        function listPaper() {
+            window.location.href = "/paper/listPaper";
+        }
+    </script>
+</body>
+</html>

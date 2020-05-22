@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>判断题列表</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+    <table class="layui-table" border="1px">
+        <thead>
+            <tr>
+                <td>内容</td>
+                <td>答案</td>
+                <td>选择</td>
+            </tr>
+        </thead>
+        <tbody th:each="tofQst:${tofQsts}">
+            <tr>
+                <td th:text="${tofQst.getTOFInfo()}"></td>
+                <td th:text="${tofQst.getTOFAnsw()}"></td>
+                <td><input type="checkbox" th:value="${tofQst.getTOFQuestion()}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="button" class="layui-btn layui-btn-xs" value="提交" onclick="submit1()">
+    <input type="button" class="layui-btn layui-btn-danger layui-btn-xs" value="返回" onclick="fallBack()">
+    <script>
+        function submit1() {
+            var arr = [];
+            const s = $('input:checkbox:checked');
+            for (let i = 0;i < s.length;i++){
+                arr.push(s[i].value);
+            }
+            jQuery.ajaxSettings.traditional = true;
+            $.post("/paper/updateTOFTest",{"tests":arr},function (res) {
+                alert(res);
+            });
+        }
+        function fallBack() {
+            window.location.href = "/toManuallyPaper1";
+        }
+    </script>
+</body>
+</html>

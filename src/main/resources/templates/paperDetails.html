@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>试卷详情</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+<b>选择题</b><br>
+<table class="layui-table" lay-skin="row">
+    <thead>
+    <tr>
+        <td>问题</td>
+        <td>选项A</td>
+        <td>选项B</td>
+        <td>选项C</td>
+        <td>选项D</td>
+        <td>答案</td>
+    </tr>
+    </thead>
+    <tbody>
+    <title>选择题</title>
+    <tr th:each="choiceQst:${choiceQsts}">
+        <td th:text="${choiceQst.getChoiceQstInfo()}"></td>
+        <td th:text="${choiceQst.getChoiceQstOp1()}"></td>
+        <td th:text="${choiceQst.getChoiceQstOp2()}"></td>
+        <td th:text="${choiceQst.getChoiceQstOp3()}"></td>
+        <td th:text="${choiceQst.getChoiceQstOp4()}"></td>
+        <td th:text="${choiceQst.getChoiceQstAnsw()}"></td>
+    </tr>
+    </tbody>
+</table>
+<b>判断题</b><br>
+<table class="layui-table" lay-skin="row">
+    <thead>
+    <tr>
+        <td>问题</td>
+        <td>答案</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tofQst:${tofQsts}">
+        <td th:text="${tofQst.getTOFInfo()}"></td>
+        <td th:text="${tofQst.getTOFAnsw()}"></td>
+    </tr>
+    </tbody>
+</table>
+<b>简答题</b><br>
+<table class="layui-table" lay-skin="row">
+    <thead>
+    <tr>
+        <td>问题</td>
+        <td>答案</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="designQst:${designQsts}">
+        <td th:text="${designQst.getDesignInfo()}"></td>
+        <td th:text="${designQst.getDesignAnsw()}"></td>
+    </tr>
+    </tbody>
+</table>
+<b>应用题</b><br>
+<table class="layui-table" lay-skin="row">
+    <thead>
+    <tr>
+        <td>问题</td>
+        <td>答案</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bigQst:${bigQsts}">
+        <td th:text="${bigQst.getBigInfo()}"></td>
+        <td th:text="${bigQst.getBigAnsw()}"></td>
+    </tr>
+    </tbody>
+</table>
+<input type="button" class="layui-btn layui-btn-xs" value="返回" onclick="fallBack()">
+<script>
+    function fallBack() {
+        window.location.href = "/toPaperList";
+    }
+</script>
+</body>
+</html>

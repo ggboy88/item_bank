@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggboy.item_bank.dao.PaperDao">
+    <resultMap id="PaperMP" type="Paper">
+        <id column="Paper_id" property="paperId"/>
+        <result column="Paper_course" property="paperCourse"/>
+        <result column="Paper_madedate" property="paperMadeDate"/>
+        <result column="Paper_teacher" property="paperTeacher"/>
+        <result column="Paper_choiceInfo" property="paperChoiceInfo"/>
+        <result column="Paper_TOFInfo" property="paperTOFInfo"/>
+        <result column="Paper_DesignInfo" property="paperDesignInfo"/>
+        <result column="Paper_BigInfo" property="paperBigInfo"/>
+        <result column="Paper_level" property="paperLevel"/>
+    </resultMap>
+    <select id="selectPaperByUserId" resultMap="PaperMP" resultSets="java.util.List">
+        select * from testpaperinfo where Paper_teacher = #{id}
+    </select>
+    <select id="selectPaperById" parameterType="Integer" resultMap="PaperMP">
+        select * from testpaperinfo where Paper_id=#{id}
+    </select>
+</mapper>

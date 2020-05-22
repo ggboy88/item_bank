@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggboy.item_bank.dao.UserDao">
+    <resultMap id="userMap" type="User">
+        <id property="TeacherId" column="Teacher_id"/>
+        <result property="TeacherName" column="Teacher_name"/>
+        <result property="TeacherSpecialty" column="Teacher_Specialty"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="flag" column="flag"/>
+    </resultMap>
+    <select id="checkPhoneNum" parameterType="String" resultMap="userMap">
+        select * from users where username=#{username}
+    </select>
+    <select id="selectUserListByFlag" parameterType="String" resultMap="userMap" resultSets="java.util.List">
+        select * from users where flag = #{flag}
+    </select>
+    <select id="selectUserById" parameterType="Integer" resultMap="userMap">
+        select * from users where id = #{id}
+    </select>
+    <update id="updateUser">
+        update users set username=#{username},password=#{password},Teacher_name=#{teacherName} where id = #{id}
+    </update>
+    <update id="deleteUser" parameterType="Integer">
+        update users set flag=2 where id = #{id}
+    </update>
+    <update id="accessReq" parameterType="Integer">
+        update users set flag = 1 where id = #{id}
+    </update>
+</mapper>

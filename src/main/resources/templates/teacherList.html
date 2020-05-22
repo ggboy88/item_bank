@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教师列表</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+</head>
+<body>
+    <table border="1px" class="layui-table">
+        <thead>
+            <tr>
+                <td>编号</td>
+                <td>手机号</td>
+                <td>密码</td>
+                <td>教师姓名</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user:${users}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getUsername()}"></td>
+                <td th:text="${user.getPassword()}"></td>
+                <td th:text="${user.getTeacherName()}"></td>
+                <td><input type="button" class="layui-btn layui-btn-xs" value="修改" th:onclick="toUpdatePage([[${user.getId()}]])">
+                    <input type="button" class="layui-btn layui-btn-danger layui-btn-xs" value="删除" th:onclick="deleteUser([[${user.getId()}]])"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="../static/js/jquery.min.js"></script>
+    <script>
+
+        function toUpdatePage(userId) {
+            window.location.href = "/admin/toUpdateTeacher?id="+userId;
+        }
+
+        function deleteUser(userId) {
+            $.post("/admin/deleteUser",{"id":userId},function (res) {
+                if (res){
+                    window.location.reload(res);
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>

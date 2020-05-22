@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>试卷列表</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <td>科目</td>
+                <td>创建日期</td>
+                <td>难度</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="paper:${papers}">
+                <td th:text="${paper.getPaperCourse()}"></td>
+                <td th:text="${paper.getPaperMadeDate()}"></td>
+                <td th:text="${paper.getPaperLevel()}"></td>
+                <td><input type="button" value="查看详情" class="layui-btn layui-btn-xs" th:onclick="selectPaper([[${paper.getPaperId()}]])">
+                    <input type="button" value="删除试卷" class="layui-btn layui-btn-danger layui-btn-xs" th:onclick="deletePaper([[${paper.getPaperId()}]])"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function selectPaper(paperId) {
+            window.location.href = "/paper/selectPaperById?paperId="+paperId;
+        }
+        function deletePaper(paperId) {
+            $.post("/paper/deletePaperById",{"paperId":paperId},function (res) {
+                if (res){
+                    location.reload();
+                }
+            })
+        }
+    </script>
+</body>
+</html>

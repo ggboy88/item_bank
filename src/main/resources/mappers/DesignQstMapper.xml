@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggboy.item_bank.dao.DesignQstDao">
+    <resultMap id="DesMP" type="DesignQst">
+        <id property="designId" column="Design_id"/>
+        <result property="designQuestion" column="Design_question"/>
+        <result property="designInfo" column="Design_info"/>
+        <result property="designAnsw" column="Design_answ"/>
+    </resultMap>
+    <select id="selectDesQstById" parameterType="String" resultMap="DesMP">
+        select * from designtestinfo where Design_question = #{Design_question}
+    </select>
+    <select id="selectTOFQstById1" resultMap="DesMP">
+        select * from designtestinfo where Design_id = #{id}
+    </select>
+</mapper>

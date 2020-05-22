@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>选择题列表</title>
+    <script src="../static/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+</head>
+<body>
+    <table border="1px" class="layui-table">
+        <tr>
+            <th>编号</th>
+            <th>试题内容</th>
+            <th>A选项</th>
+            <th>B选项</th>
+            <th>C选项</th>
+            <th>D选项</th>
+            <th>答案</th>
+        </tr>
+        <tbody id="choiceData">
+        </tbody>
+    </table><br>
+   <script>
+       $.post("/test/choiceList",{"page":1,"limit":10},function (res) {
+            console.log(res);
+            var choiceList = res.choiceList;
+            for (var i=0;i<choiceList.length;i++){
+                var choiceQst = choiceList[i];
+                var trTag = document.createElement("tr");
+                var td1 = document.createElement("td");
+                td1.innerHTML = choiceQst.choiceQstQuestion;
+
+                var td2 = document.createElement("td");
+                var text1 = document.createElement("textarea");
+                td2.appendChild(text1);
+
+                text1.innerHTML = choiceQst.choiceQstInfo;
+                var td3 = document.createElement("td");
+                var text2 = document.createElement("textarea");
+                text2.innerHTML = choiceQst.choiceQstOp1;
+                td3.appendChild(text2);
+
+                var td4 = document.createElement("td");
+                var text3 = document.createElement("textarea");
+                text3.innerHTML = choiceQst.choiceQstOp2;
+                td4.appendChild(text3);
+
+                var td5 = document.createElement("td");
+                var text4 = document.createElement("textarea");
+                text4.innerHTML = choiceQst.choiceQstOp3;
+                td5.appendChild(text4);
+
+                var td6 = document.createElement("td");
+                var text5 = document.createElement("textarea");
+                text5.innerHTML = choiceQst.choiceQstOp4;
+                td6.appendChild(text5);
+
+                var td7 = document.createElement("td");
+                var text6 = document.createElement("textarea");
+                text6.innerHTML = choiceQst.choiceQstAnsw;
+                td7.appendChild(text6);
+
+                var td8 = document.createElement("td");
+                var btn1 = document.createElement("button");
+                btn1.innerText = "修改";
+                btn1.onclick = function(){
+                    window.location.reload(true);
+                }
+                var btn2 = document.createElement("button");
+                btn2.innerText = "删除";
+                btn2.id = choiceQst.choiceQstQuestion;
+                btn2.onclick = function (){
+                    var choiceQstQuestion = this.id;
+                    $.post("/test/deleteChoiceTest",{"choiceQstQuestion":choiceQstQuestion},function (res) {
+                        window.location.reload(true);
+                    })
+                }
+                td8.appendChild(btn1);
+                td8.appendChild(btn2);
+
+                trTag.appendChild(td1);
+                trTag.appendChild(td2);
+                trTag.appendChild(td3);
+                trTag.appendChild(td4);
+                trTag.appendChild(td5);
+                trTag.appendChild(td6);
+                trTag.appendChild(td7);
+                trTag.appendChild(td8);
+
+                document.getElementById("choiceData").appendChild(trTag);
+            }
+       },"json")
+   </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>添加试题</title>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+    <select onchange="testPage(this)">
+        <option>请选择题型</option>
+        <option>选择题</option>
+        <option>判断题</option>
+        <option>简答题</option>
+        <option>应用题</option>
+    </select>
+    <script>
+        function testPage(obj) {
+            const msg = obj.value;
+            $.post("/test/choiceType",{msg:msg},function (res) {
+                if (res === "选择题"){
+                    window.location.href = "/toAddChoiceQst";
+                }else if (res === "判断题"){
+                    window.location.href = "/toAddTOFQst";
+                }else if (res === "简答题"){
+                    window.location.href = "/toDesignQst";
+                }else if (res === "应用题"){
+                    window.location.href = "/toBigQst";
+                }
+            })
+        }
+    </script>
+</body>
+</html>

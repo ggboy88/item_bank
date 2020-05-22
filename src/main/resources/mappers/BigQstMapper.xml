@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggboy.item_bank.dao.BigQstDao">
+    <resultMap id="BigMP" type="BigQst">
+        <id property="BigId" column="Big_id"/>
+        <result property="BigQuestion" column="Big_question"/>
+        <result property="BigInfo" column="Big_info"/>
+        <result property="BigAnsw" column="Big_answ"/>
+    </resultMap>
+    <select id="selectBigQstById" parameterType="String" resultMap="BigMP">
+        select * from bigqstioninfo where Big_question = #{Big_question}
+    </select>
+    <select id="selectTOFQstById1" resultMap="BigMP">
+        select * from bigqstioninfo where Big_id = #{id}
+    </select>
+</mapper>

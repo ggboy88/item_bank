@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>试题库管理系统</title>
+  <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">试题库管理系统</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <shiro:user>
+        <font color="#808080">学院：<li class="layui-nav-item" th:text="${SpecialtyName}"></li></font>
+      </shiro:user>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <shiro:user>
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="http://t.cn/RCzsdCq" class="layui-nav-img" style="float: left">
+            <div th:text="${TeacherName}" style="float: right"></div>
+          </a>
+          <dl class="layui-nav-child">
+            <dd><a href="">基本资料</a></dd>
+            <dd><a href="">安全设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="/logout">退出</a></li>
+      </shiro:user>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <shiro:user>
+          <shiro:hasPermission name="tea:tadd">
+            <li class="layui-nav-item layui-nav-itemed">
+              <a class="" href="javascript:;">试题管理</a>
+              <dl class="layui-nav-child">
+                <dd><a href="/toAddTest" target="mainFrame">添加试题</a></dd>
+                <dd><a href="/toTestList" target="mainFrame">修改试题</a></dd>
+              </dl>
+            </li>
+
+            <li class="layui-nav-item">
+              <a href="javascript:;">试卷生成</a>
+              <dl class="layui-nav-child">
+                <dd><a href="/toCapacity" target="mainFrame">智能组卷</a></dd>
+                <dd><a href="/toManually" target="mainFrame">手动组卷</a>
+                <dd><a href="/toPaperList" target="mainFrame">查询试卷</a>
+              </dl>
+            </li>
+          </shiro:hasPermission>
+
+          <shiro:hasPermission name="sys:kmanager">
+            <li class="layui-nav-item">
+              <a href="javascript:;">管理员权限</a>
+              <dl class="layui-nav-child">
+                <dd><a href="/toRequestPage" target="mainFrame">待处理请求</a></dd>
+                <dd><a href="/toTeacherList" target="mainFrame">教师管理</a></dd>
+                <dd><a href="/toSpecialtyList" target="mainFrame">学院管理</a></dd>
+              </dl>
+            </li>
+          </shiro:hasPermission>
+
+
+        </shiro:user>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+    	<iframe name="mainFrame" width="100%" style="height: 760px;" frameborder="0"></iframe>
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © ggboy-荣誉出品
+  </div>
+</div>
+<script src="../static/layui-v2.5.6/layui/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
+</body>
+</html>

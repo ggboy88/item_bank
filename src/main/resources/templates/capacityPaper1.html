@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>智能组卷</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+<p id="head"></p>
+<b>选择题</b><br>
+<table class="layui-table" lay-skin="row">
+    <thead>
+    <tr>
+        <td>问题</td>
+        <td>选项A</td>
+        <td>选项B</td>
+        <td>选项C</td>
+        <td>选项D</td>
+    </tr>
+    </thead>
+    <tbody>
+    <title>选择题</title>
+    <tr th:each="choiceQst:${choiceQsts}">
+        <td th:text="${choiceQst.getChoiceQstInfo()}"></td>
+        <td th:text="${choiceQst.getChoiceQstOp1()}"></td>
+        <td th:text="${choiceQst.getChoiceQstOp2()}"></td>
+        <td th:text="${choiceQst.getChoiceQstOp3()}"></td>
+        <td th:text="${choiceQst.getChoiceQstOp4()}"></td>
+    </tr>
+    </tbody>
+</table>
+<b>判断题</b><br>
+<table class="layui-table" lay-skin="row">
+    <thead>
+    <tr>
+        <td>问题</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tofQst:${tofQsts}">
+        <td th:text="${tofQst.getTOFInfo()}"></td>
+    </tr>
+    </tbody>
+</table>
+<b>简答题</b><br>
+<table class="layui-table" lay-skin="row">
+    <thead>
+    <tr>
+        <td>问题</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="designQst:${designQsts}">
+        <td th:text="${designQst.getDesignInfo()}"></td>
+    </tr>
+    </tbody>
+</table>
+<b>应用题</b><br>
+<table class="layui-table" lay-skin="row">
+    <thead>
+    <tr>
+        <td>问题</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bigQst:${bigQsts}">
+        <td th:text="${bigQst.getBigInfo()}"></td>
+    </tr>
+    </tbody>
+</table>
+<input type="button" class="layui-btn layui-btn-xs" value="保存试卷" onclick="updatePaper()">
+<script>
+    function updatePaper() {
+        $.post("/paper/updateCapacityPaper",{"msg":"msg"},function (res) {
+            if (res){
+                $("#head").text("添加成功！").css("color","green");
+            }else {
+                $("#head").text("添加失败！").css("color","red");
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>智能组卷</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+    <script src="../static/layui-v2.5.6/layui/layui.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+    <p th:text="${msg}" style="color: red"></p>
+    <form class="layui-form" method="post" action="/paper/capacityPaper">
+        <div class="layui-form-item">
+            <label class="layui-form-label">请选择科目</label>
+            <div class="layui-input-block">
+                <select  lay-verify="required" name="subject">
+                    <option value=""></option>
+                    <option th:each="subject:${subjectList}" th:text="${subject.getCourseName()}" th:value="${subject.getCourseId()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择题数</label>
+            <div class="layui-input-block">
+                <select  lay-verify="required" name="choiceCount">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">判断题数</label>
+            <div class="layui-input-block">
+                <select  lay-verify="required" name="tofCount">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">简答题数</label>
+            <div class="layui-input-block">
+                <select  lay-verify="required" name="designCount">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">应用题数</label>
+            <div class="layui-input-block">
+                <select  lay-verify="required" name="bigCount">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">试卷难度</label>
+            <div class="layui-input-block">
+                <select  lay-verify="required" name="level">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <input type="submit" class="layui-btn layui-btn-xs" value="开始组卷">
+    </form>
+    <script>
+        layui.use('form',function () {
+            const form = layui.form;
+            form.render();
+        })
+    </script>
+</body>
+</html>

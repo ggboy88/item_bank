@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggboy.item_bank.dao.SubjectDao">
+    <resultMap id="subjectMap" type="Subject">
+        <result column="Course_id" property="courseId"/>
+        <result column="Course_name" property="courseName"/>
+        <result column="Course_Specialty" property="courseSpecialty"/>
+    </resultMap>
+    <select id="selectSubjectByUserTelAndSId" resultMap="subjectMap" resultSets="java.util.List">
+        SELECT Course_id,Course_name,Course_Specialty FROM
+        subjectinfo INNER JOIN specialtyinfo
+        ON subjectinfo.Course_Specialty = specialtyinfo.Specialty_id
+        INNER JOIN users
+        ON specialtyinfo.Specialty_id = users.Teacher_Specialty
+        WHERE users.Teacher_Specialty = #{userSp} AND users.username = #{userTel}
+    </select>
+    <select id="selectSubBySpecialtyId" parameterType="Integer" resultMap="subjectMap" resultSets="java.util.List">
+        select * from subjectinfo where Course_Specialty = #{specialtyId}
+    </select>
+    <select id="selectSubNameById" parameterType="String" resultType="String">
+        select Course_name from subjectinfo where Course_id = #{id}
+    </select>
+    <select id="selectLastId" resultType="String">
+        SELECT Course_id FROM subjectinfo ORDER BY Course_id DESC LIMIT 1
+    </select>
+</mapper>

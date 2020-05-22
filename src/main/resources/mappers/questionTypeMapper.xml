@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ggboy.item_bank.dao.QstTypeDao">
+    <resultMap id="QstTypeMP" type="QstType">
+        <result column="Question_id" property="questionId"/>
+        <result column="Question_name" property="questionName"/>
+        <result column="Question_level" property="questionLevel"/>
+        <result column="Question_course" property="questionCourse"/>
+        <result column="Question_teacher" property="questionTeacher"/>
+    </resultMap>
+    <select id="selectChoiceQst" resultMap="QstTypeMP" resultSets="java.util.List">
+        select * from questiontypeinfo
+         where Question_teacher = #{teacherId}
+         and Question_name = #{choiceType}
+         limit #{start},#{limit}
+    </select>
+    <select id="selectCountByTIdAndQstType" resultType="int">
+        select count(1) from questiontypeinfo where Question_teacher = #{teacherId}
+        and Question_name = #{qstType}
+    </select>
+    <select id="selectTestBySubject" resultType="String" resultSets="java.util.List">
+        select Question_id from questiontypeinfo where Question_name = #{type} and Question_course = #{subject}
+    </select>
+    <select id="selectQstByLevelAndSubjectAndType" resultType="String" resultSets="java.util.Arrays">
+        select Question_id from questiontypeinfo where Question_course = #{subject} and Question_level = #{level} and Question_name = #{type}
+    </select>
+</mapper>

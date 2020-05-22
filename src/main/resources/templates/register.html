@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Kodinger">
+	<title>注册界面</title>
+	<link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/my-login.css">
+	<link rel="stylesheet" type="text/css" href="../static/layui-v2.5.6/layui/css/layui.css">
+</head>
+<body class="my-login-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+					<div class="brand">
+						<img src="../static/img/logo.jpg">
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+							<h3 class="card-title" style="">注册</h3>
+							<form method="POST" action="/user/regist" >
+								<div class="form-group">
+									<label for="username">手机号</label>
+									<input id="username" type="text" class="form-control" onblur="checkPhoneNum(this)" name="username" required autofocus>
+									<div id="font"></div>
+								</div>
+								<script>
+									function checkPhoneNum(obj) {
+										var userTel = obj.value;
+										if (userTel.trim() !== ""){
+											$.post("/user/checkPhoneNum",{userTel:userTel},function (res) {
+												if (!res){
+													$("#font").text("用户已存在！").prop("color","red");
+												}else {
+													$("#font").text("");
+												}
+											})
+										}
+									}
+								</script>
+								<div class="form-group">
+									<label for="TeacherName">姓名</label>
+									<input id="TeacherName" type="text" class="form-control" name="TeacherName" required autofocus>
+								</div>
+								<script src="../static/js/jquery.min.js"></script>
+								<div class="form-group">
+									<label for="TeacherSpecialty">学院</label>
+									<select id="TeacherSpecialty" name="TeacherSpecialty" style="width: 335px;height:30px;border-radius: 3px;-webkit-border-radius: 3px;-moz-border-radius: 3px;color: gray;border-color: grey">
+										<option value="">请选择学院</option>
+										<option th:each="t:${Specialties}" th:value="${t.getSpecialtyName()}" th:text="${t.getSpecialtyName()}"></option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="password">密码</label>
+									<input id="password" type="password" class="form-control" name="password" required data-eye>
+								</div>
+								<div class="form-group">
+									<label for="code">短信验证码</label>
+									<input id="code" class="form-control" type="text" name="code" max="4" placeholder="请输入验证码" style="width: 200px;float: left">
+									<button type="button" id="codeBtn" class="btn btn-primary btn-block" value="发送验证码" style="width: 135px;float: right;height: 40px" onclick="sendCode()">发送验证码</button>
+									<div th:text="${wrongMsg}"></div>
+								</div>
+								<script>
+									function sendCode() {
+										$.post("/user/sendMsg",{msg:"value"},function (res) {
+											if (res){
+												$("#codeBtn").attr("disabled",true).text("验证码以发送").prop("background-color","grey");
+											}else {
+												$("#codeBtn").text("发送失败，该用户已注册");
+											}
+										})
+									}
+								</script>
+								<div class="form-group">
+									<label>
+										<input type="checkbox" name="agree" value="1" id="checkBox"> 我同意这些条款
+									</label>
+								</div>
+								<div class="form-group no-margin">
+									<input type="submit" class="btn btn-primary btn-block" value="注册" disabled="disabled">
+									<div id="font1"></div>
+								</div>
+								<script>
+									$("#checkBox").click(function () {
+										if ($(this).prop("checked")){
+											$(":submit").removeAttr("disabled");
+										}else {
+											$(":submit").attr("disabled","disabled");
+											$("#font1").text("请先同意用户条款！").prop("color","red");
+										}
+									})
+								</script>
+								<div class="margin-top20 text-center">
+									已有账号？ <a href="/">登录</a>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="footer">
+						Copyright &copy; Your Company 2017 - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="ggboy88">ggboy88</a> - Collect from <a href="#" title="网页模板" target="_blank">ggoby88</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="../static/js/jquery.min.js"></script>
+	<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../static/js/my-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学院详情</title>
+    <link rel="stylesheet" href="../static/layui-v2.5.6/layui/css/layui.css">
+</head>
+<body>
+<input type="hidden" th:value="${subjectList.get(0).getCourseSpecialty()}" id="courseSpecialty"><b th:text="${spName}"></b>
+    <table border="1px" class="layui-table">
+        <thead>
+            <tr>
+                <td>编号</td>
+                <td>科目名</td>
+                <td>删除科目</td>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subject:${subjectList}">
+            <td th:text="${subject.getCourseId()}"></td>
+            <td th:text="${subject.getCourseName()}"></td>
+            <td><a class="layui-tab" th:onclick="deleteC([[${subject.getCourseId()}]]);">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <b>添加科目</b><br>
+    <p style="color: green">当前被使用最大id为：<b th:text="${subId}"></b></p>
+    <input type="text" placeholder="请输入科目号" id="courseId" class="layui-input"><br>
+    <input type="text" placeholder="请输入科目名" id="courseName" class="layui-input"><br>
+    <input type="button" value="添加" class="layui-btn layui-btn-xs">
+    <script src="../static/js/jquery.min.js"></script>
+    <script>
+
+        function deleteC(courseId){
+            $.post("/deleteSub",{"courseId":courseId},function (res) {
+                window.location.reload(res);
+            })
+        }
+
+        $(function () {
+            $("input:button").click(function () {
+                var courseId = $("#courseId").val();
+                var courseName = $("#courseName").val();
+                var courseSpecialty = $("#courseSpecialty").val();
+                $.post("/updateSub",{"courseId":courseId,"courseName":courseName,"courseSpecialty":courseSpecialty},function (res) {
+                    window.location.reload(res);
+                })
+            })
+        })
+    </script>
+</body>
+</html>

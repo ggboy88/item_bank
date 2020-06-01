@@ -12,8 +12,7 @@ public class ArrayUtils {
                 stringBuffer.append(",");
             }
         }
-        String s = new String(stringBuffer);
-        return s;
+        return new String(stringBuffer);
     }
 
 }

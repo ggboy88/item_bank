@@ -1,5 +1,5 @@
 # item_bank
-试题库管理系统：基于SpringBoot、mysql使用Shiro安全框架，前端采用Thymeleaf开发的单体项目
+试题库管理系统：基于SSM、mysql、Shiro安全框架，前端采用Thymeleaf开发的单体项目
 包含：
 单点登录、手机号注册。
 教师用户和超级管理员用户权限校验，添加试题，查询试题，手动组卷，智能组卷，试卷预览打印等功能。

@@ -52,7 +52,7 @@ public class SmsUtil {
         //必填:短信签名-可在短信控制台中找到
         request.setSignName("试题库管理系统");
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_187745910");
+        request.setTemplateCode("啦啦啦用自己的");
         //手机验证码
         StringBuffer randomNum = new StringBuffer();
         for (int i = 0; i < 4; i++) {
